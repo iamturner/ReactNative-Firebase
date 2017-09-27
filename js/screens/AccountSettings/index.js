@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert, AlertIOS } from "react-native";
 import { 
 	View, 
 	Container, 
@@ -11,10 +12,13 @@ import {
 	Body, 
 	Right, 
 	Icon, 
-	Separator
+	Separator, 
+	Toast
 } from "native-base";
 import getTheme from './../../../native-base-theme/components';
 import myTheme from './../../../native-base-theme/variables/myTheme';
+import Spinner from 'react-native-loading-spinner-overlay';
+import authProvider from "./../../providers/auth/auth";
 
 export default class AccountSettings extends Component {
 	
@@ -31,6 +35,9 @@ export default class AccountSettings extends Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = {
+			loading: false
+        }
 	}
 	
 	goToChangeEmail() {
@@ -39,6 +46,36 @@ export default class AccountSettings extends Component {
 	
 	goToChangePassword() {
 		this.props.navigation.navigate('ChangePassword');
+	}
+	
+	deleteAccount(rootNav) {
+		AlertIOS.prompt(
+			'Password Confirmation',
+			'Please confirm your password to delete your account',
+			password => {
+				this.setState({ loading: true }, () => {
+					authProvider.deleteAccount(password).then(() => {
+						this.setState({ loading: false }, () => {
+							setTimeout(() => {
+								Toast.show({
+									text: 'Your account has been deleted.',
+									duration: 3000, 
+									position: 'bottom'
+								});
+								rootNav.navigate('LoginStack');
+							}, 10);
+						});
+					}, error => {
+						this.setState({ loading: false }, () => {
+							setTimeout(() => {
+								Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });
+							}, 10);
+						});
+					});
+				});
+			}, 
+			'secure-text'
+		);
 	}
 	
 	render() {
@@ -72,10 +109,11 @@ export default class AccountSettings extends Component {
 						<View listHeading>
 							<Text>Some sort of warning about deleting your account.</Text>
 						</View>
-						<Button transparent full danger>
+						<Button transparent full danger onPress={() => this.deleteAccount(rootNav)}>
 							<Text>Delete Account</Text>
 						</Button>
 					</Content>
+					<Spinner visible={this.state.loading} />
 				</Container>
 			</StyleProvider>
 		)

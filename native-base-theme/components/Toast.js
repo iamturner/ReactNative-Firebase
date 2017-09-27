@@ -13,13 +13,13 @@ export default (variables = variable) => {
     ".success": {
       backgroundColor: variables.brandSuccess
     },
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: "rgba(0,0,0,0.9)",
     borderRadius: platform === "ios" ? 5 : 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
-    minHeight: 50,
+    padding: 8,
+	paddingHorizontal: 12,
     "NativeBase.Text": {
       color: "#fff",
       flex: 1

@@ -48,7 +48,7 @@ export default class LoginWithEmail extends Component {
 		}
     }
 	
-	goToHome(rootNav) {
+	loginWithEmail(rootNav) {
 		let email = this.loginWithEmailForm.email;
 		let password = this.loginWithEmailForm.password;
 		if (email == null || password == null) {
@@ -86,18 +86,16 @@ export default class LoginWithEmail extends Component {
 								<Input 
 									keyboardType="email-address" 
 									autoCapitalize="none" 
-									value={this.loginWithEmailForm.email} 
 									onChangeText={(value) => this.loginWithEmailForm.email = value} 
 									autoCorrect={false} />
 							</Item>
 							<Item fixedLabel last>
 								<Label>Password</Label>
 								<Input 
-									value={this.loginWithEmailForm.password} 
 									onChangeText={(value) => this.loginWithEmailForm.password = value} 
 									secureTextEntry={true} />
 							</Item>
-							<Button block primary submit onPress={() => this.goToHome(rootNav)}>
+							<Button block primary submit onPress={() => this.loginWithEmail(rootNav)}>
 								<Text>Sign In</Text>
 							</Button>
 						</Form>

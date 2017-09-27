@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, StatusBar } from "react-native";
+import { Modal, StatusBar, ActivityIndicator, Alert } from "react-native";
 import { 
 	Container, 
 	Content, 
@@ -15,10 +15,13 @@ import {
 	Form, 
 	Item, 
 	Label, 
-	Input
+	Input, 
+	Toast
 } from "native-base";
 import getTheme from './../../../native-base-theme/components';
 import myTheme from './../../../native-base-theme/variables/myTheme';
+import Spinner from 'react-native-loading-spinner-overlay';
+import profileProvider from "./../../providers/profile/profile";
 
 import styles from "./styles";
 
@@ -27,21 +30,53 @@ export class EditProfile extends Component {
 	constructor(props, context){
         super(props, context);
         this.state = { 
-            visible: false
+            visible: false, 
+			loading: false, 
+			userProfile: JSON.parse(JSON.stringify(props.profile))
         }
-		this.onClose = () => props.onClose()
+		/* Cancel changes */
+		this.cancel = () => {
+			this.setState({
+				userProfile: JSON.parse(JSON.stringify(props.profile)), 
+				visible: false
+        	});
+			props.onCancel()
+		}
+		/* Save changes */
+		this.submit = () => {
+			let name = this.state.userProfile.name;
+			let location = this.state.userProfile.location;
+			this.setState({ loading: true }, () => {
+				profileProvider.updateUserProfile(name, location).then(() => {
+					this.setState({ loading: false }, () => {
+						Toast.show({
+              				text: 'Your profile has been updated.',
+							duration: 3000, 
+							position: 'bottom'
+            			});
+						props.onSubmit();
+					});
+				}, error => {
+					this.setState({ loading: false }, () => {
+						setTimeout(() => {
+							Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });
+						}, 10);
+					});
+				});
+			});
+		}
     }
 	
 	render() {
 		return (
 			<View>
-				<Modal animationType="slide" transparent={false} visible={this.props.visible === true}>
+				<Modal animationType="slide" visible={this.props.visible === true}>
 					<StyleProvider style={getTheme(myTheme)}>
 						<Container>
 							<Header>
 								<StatusBar barStyle="dark-content"/>
 								<Left>
-									<Button transparent onPress={() => this.hide()}>
+									<Button transparent onPress={() => this.cancel()}>
 										<Text>Cancel</Text>
 									</Button>
 								</Left>
@@ -49,40 +84,53 @@ export class EditProfile extends Component {
 									<Title>Edit Profile</Title>
 								</Body>
 								<Right>
-									<Button transparent>
+									<Button transparent onPress={() => this.submit()}>
 										<Text bold>Save</Text>
 									</Button>
 								</Right>
 							</Header>
 							<Content>
-								<View list>
+								{ !this.state.userProfile && <View style={{marginTop: 24}}>
+									<ActivityIndicator />
+								</View> }
+								{ this.state.userProfile && <View list>
 									<View listHeading>
 										<Text>Personal Information</Text>
 									</View>
 									<Form>
 										<Item first>
 											<Label>Name</Label>
-											<Input />
+											<Input 
+												value={this.state.userProfile.name} 
+												onChangeText={(value) => {
+													let profile = this.state.userProfile;
+														profile.name = value;
+													this.setState({
+														userProfile: profile
+													})
+												}} />
 										</Item>
 										<Item last>
 											<Label>Location</Label>
-											<Input />
+											<Input 
+												value={this.state.userProfile.location} 
+												onChangeText={(value) => {
+													let profile = this.state.userProfile;
+														profile.location = value;
+													this.setState({
+														userProfile: profile
+													})
+												}} />
 										</Item>
 									</Form>
-								</View>
+								</View> }
 							</Content>
+							<Spinner visible={this.state.loading} />
 						</Container>
 					</StyleProvider>
 				</Modal>
 			</View>
 		)
 	}
-	
-	hide() {
-		this.onClose()
-        this.setState({
-            visible: false
-        })
-    }
 	
 }

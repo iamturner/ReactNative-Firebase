@@ -12,13 +12,17 @@ import {
 	Separator, 
 	connectStyle
 } from "native-base";
+import { ActivityIndicator } from 'react-native';
 import getTheme from './../../../native-base-theme/components';
 import myTheme from './../../../native-base-theme/variables/myTheme';
 import { EditProfile } from "./../EditProfile";
+import profileProvider from "./../../providers/profile/profile";
 
 //import styles from "./styles";
 
 export default class Profile extends Component {
+	
+	userProfile: any;
 	
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Profile', 
@@ -39,12 +43,18 @@ export default class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            editProfileOpen: false
+            editProfileOpen: false, 
+			userProfile: null
         }
 	}
 
 	componentDidMount() {
 		_this = this;
+		profileProvider.getUserProfile().on('value', userProfileSnapshot => {
+			this.setState({
+				userProfile: userProfileSnapshot.val()
+        	});
+		});
 	}
 	
 	render() {
@@ -55,7 +65,10 @@ export default class Profile extends Component {
 		return (
 			<StyleProvider style={getTheme(myTheme)}>
 				<Container>
-					<Content>
+					{ !this.state.userProfile && <View style={{marginTop: 24}}>
+						<ActivityIndicator />
+					</View> }
+					{ this.state.userProfile && <Content>
 						<View list>
 							<View listHeading>
 								<Text>Personal Information</Text>
@@ -64,33 +77,35 @@ export default class Profile extends Component {
 								<ListItem button>
 									<Text>Name</Text>
 									<Right>
-										<Text note></Text>
+										<Text note>{ this.state.userProfile.name }</Text>
 									</Right>
 								</ListItem>
 								<ListItem last noBorder>
 									<Text>Location</Text>
 									<Right>
-										<Text note></Text>
+										<Text note>{ this.state.userProfile.location }</Text>
 									</Right>
 								</ListItem>
 							</List>
 						</View>
-					</Content>
-					<EditProfile visible={this.state.editProfileOpen} onClose={()=>this.toggleEditProfile()} />
-				</Container>
+						<EditProfile 
+							visible={this.state.editProfileOpen} 
+							profile={this.state.userProfile} 
+							onCancel={()=>this.toggleEditProfile()} 
+							onSubmit={()=>this.toggleEditProfile()} />
+					</Content> }
+				</Container> 
 			</StyleProvider>
 		)
 		
 	}
 	
 	toggleEditProfile() {
-		this.setState({
-            editProfileOpen: !this.state.editProfileOpen
-        });
+		if (this.state.userProfile) {
+			this.setState({
+            	editProfileOpen: !this.state.editProfileOpen
+        	});
+		}
 	}
 	
 }
-
-/*<Separator style={{ marginTop: 11 }}>
-							<Text>PERSONAL INFORMATION</Text>
-						</Separator>*/
