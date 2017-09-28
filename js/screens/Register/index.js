@@ -37,7 +37,8 @@ export default class Register extends Component {
 	constructor(props, context) {
         super(props, context);
         this.state = {
-			loading: false
+			loading: false, 
+			valid: false
         }
 		this.registerForm = {
 			name: null, 
@@ -47,12 +48,12 @@ export default class Register extends Component {
     }
 	
 	register(rootNav) {
+		if (!this.state.valid) {
+			return false;
+		}
 		let name = this.registerForm.name;
 		let email = this.registerForm.email;
 		let password = this.registerForm.password;
-		if (name == null || email == null || password == null) {
-			return false;
-		}
 		this.setState({ loading: true }, () => {
 			authProvider.register(name, email, password).then(() => {
 				this.setState({ loading: false }, () => {
@@ -70,6 +71,15 @@ export default class Register extends Component {
 		});
 	}
 	
+	validateRegisterForm() {
+		let name = this.registerForm.name;
+		let email = this.registerForm.email;
+		let password = this.registerForm.password;
+		this.setState({ 
+			valid: (name && email && password) ? true : false
+		});
+	}
+	
 	render() {
 		
 		const rootNav = this.props.screenProps.rootNavigation;
@@ -79,30 +89,42 @@ export default class Register extends Component {
 				<Container>
 					<Content padder>
 						<Form rounded>
-							<Item fixedLabel first>
+							<Item first>
 								<Label>Name</Label>
 								<Input 
-									onChangeText={(value) => this.registerForm.name = value} 
+									onChangeText={(value) => {
+										this.registerForm.name = value, 
+										this.validateRegisterForm()
+									}} 
 									autoCorrect={false} />
 							</Item>
-							<Item fixedLabel>
+							<Item>
 								<Label>Email</Label>
 								<Input 
 									keyboardType="email-address" 
 									autoCapitalize="none" 
-									onChangeText={(value) => this.registerForm.email = value} 
+									onChangeText={(value) => {
+										this.registerForm.email = value, 
+										this.validateRegisterForm()
+									}} 
 									autoCorrect={false} />
 							</Item>
-							<Item fixedLabel last>
+							<Item last>
 								<Label>Password</Label>
 								<Input 
-									onChangeText={(value) => this.registerForm.password = value} 
+									onChangeText={(value) => {
+										this.registerForm.password = value, 
+										this.validateRegisterForm()
+									}} 
 									secureTextEntry={true} />
 							</Item>
 							<View style={{marginTop: 24}}>
-								<Button block primary onPress={() => this.register(rootNav)}>
+								{ !this.state.valid && <Button block primary disabled>
 									<Text>Create Account</Text>
-								</Button>
+								</Button> }
+								{ this.state.valid && <Button block primary onPress={() => this.register(rootNav)}>
+									<Text>Create Account</Text>
+								</Button> }
 							</View>
 						</Form>
 					</Content>

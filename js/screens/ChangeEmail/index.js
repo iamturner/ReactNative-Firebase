@@ -34,7 +34,8 @@ export default class ChangeEmail extends Component {
 		super(props);
 		this.state = {
 			loading: false, 
-			showToast: false
+			showToast: false, 
+			valid: false
         }
 		this.changeEmailForm = { 
 			newEmail: null
@@ -42,10 +43,10 @@ export default class ChangeEmail extends Component {
 	}
 	
 	changeEmail() {
-		let newEmail = this.changeEmailForm.newEmail;
-		if (newEmail == null) {
+		if (!this.state.valid) {
 			return false;
 		}
+		let newEmail = this.changeEmailForm.newEmail;
 		AlertIOS.prompt(
 			'Password Confirmation',
 			'Please confirm your password to change your email address',
@@ -75,6 +76,13 @@ export default class ChangeEmail extends Component {
 		);
 	}
 	
+	validateChangeEmailForm() {
+		let email = this.changeEmailForm.newEmail;
+		this.setState({ 
+			valid: (email) ? true : false
+		});
+	}
+	
 	render() {
 		
 		const rootNav = this.props.screenProps.rootNavigation;
@@ -84,17 +92,23 @@ export default class ChangeEmail extends Component {
 				<Container>
 					<Content padder>
 						<Form rounded>
-							<Item fixedLabel first last>
+							<Item first last>
 								<Label>Email</Label>
 								<Input 
 									keyboardType="email-address" 
 									autoCapitalize="none" 
-									onChangeText={(value) => this.changeEmailForm.newEmail = value} 
+									onChangeText={(value) => {
+										this.changeEmailForm.newEmail = value, 
+										this.validateChangeEmailForm()
+									}} 
 									autoCorrect={false} />
 							</Item>
-							<Button block primary submit onPress={() => this.changeEmail()}>
+							{ !this.state.valid && <Button block primary submit disabled>
 								<Text>Submit</Text>
-							</Button>
+							</Button> }
+							{ this.state.valid && <Button block primary submit onPress={() => this.changeEmail()}>
+								<Text>Submit</Text>
+							</Button> }
 						</Form>
 					</Content>
 					<Spinner visible={this.state.loading} />

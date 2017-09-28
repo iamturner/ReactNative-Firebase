@@ -82,6 +82,8 @@ export default (variables = variable) => {
 	".rounded": {
 		marginTop: 16, 
 		"NativeBase.Item": {
+			marginLeft: 0, 
+			paddingLeft: 15, 
 			".first": {
 				borderTopLeftRadius: 4, 
 				borderTopRightRadius: 4

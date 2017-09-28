@@ -6,7 +6,8 @@ export default (variables = variable) => {
 
   const buttonTheme = {
     ".disabled": {
-      backgroundColor: variables.btnDisabledBg
+      //backgroundColor: variables.btnDisabledBg, 
+	  opacity: 0.4
     },
     ".bordered": {
       ".dark": {

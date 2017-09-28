@@ -34,7 +34,8 @@ export default class ChangePassword extends Component {
 		super(props);
 		this.state = {
 			loading: false, 
-			showToast: false
+			showToast: false, 
+			valid: false
         }
 		this.changePasswordForm = {
 			current: null, 
@@ -43,11 +44,11 @@ export default class ChangePassword extends Component {
 	}
 	
 	changePassword() {
-		let currentPassword = this.changePasswordForm.current;
-		let newPassword = this.changePasswordForm.new;
-		if (currentPassword == null || newPassword == null) {
+		if (!this.state.valid) {
 			return false;
 		}
+		let currentPassword = this.changePasswordForm.current;
+		let newPassword = this.changePasswordForm.new;
 		this.setState({ loading: true }, () => {
 			authProvider.updatePassword(currentPassword, newPassword).then(() => {
 				this.setState({ loading: false }, () => {
@@ -70,6 +71,14 @@ export default class ChangePassword extends Component {
 		});
 	}
 	
+	validateChangePasswordForm() {
+		let currentPassword = this.changePasswordForm.current;
+		let newPassword = this.changePasswordForm.new;
+		this.setState({ 
+			valid: (currentPassword && newPassword) ? true : false
+		});
+	}
+	
 	render() {
 		
 		const rootNav = this.props.screenProps.rootNavigation;
@@ -79,21 +88,30 @@ export default class ChangePassword extends Component {
 				<Container>
 					<Content padder>
 						<Form rounded>
-							<Item fixedLabel first>
+							<Item first>
 								<Label>Current</Label>
 								<Input 
-									onChangeText={(value) => this.changePasswordForm.current = value} 
+									onChangeText={(value) => {
+										this.changePasswordForm.current = value, 
+										this.validateChangePasswordForm()
+									}} 
 									secureTextEntry={true} />
 							</Item>
-							<Item fixedLabel last>
+							<Item last>
 								<Label>New</Label>
 								<Input 
-									onChangeText={(value) => this.changePasswordForm.new = value} 
+									onChangeText={(value) => {
+										this.changePasswordForm.new = value, 
+										this.validateChangePasswordForm()
+									}} 
 									secureTextEntry={true} />
 							</Item>
-							<Button block primary submit onPress={() => this.changePassword()}>
+							{ !this.state.valid && <Button block primary submit disabled>
 								<Text>Submit</Text>
-							</Button>
+							</Button> }
+							{ this.state.valid && <Button block primary submit onPress={() => this.changePassword()}>
+								<Text>Submit</Text>
+							</Button> }
 						</Form>
 					</Content>
 					<Spinner visible={this.state.loading} />

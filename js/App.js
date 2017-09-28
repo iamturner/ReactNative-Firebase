@@ -68,11 +68,6 @@ export default class App extends Component {
     componentDidMount = async () => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
 			this.setState({ loggedUser: user });
-			/*if (!user) {
-                unsubscribe();
-            } else {
-                unsubscribe();
-            }*/
 		});
     }
 	

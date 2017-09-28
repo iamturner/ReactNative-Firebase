@@ -32,40 +32,49 @@ export class EditProfile extends Component {
         this.state = { 
             visible: false, 
 			loading: false, 
+			valid: true, 
 			userProfile: JSON.parse(JSON.stringify(props.profile))
         }
-		/* Cancel changes */
-		this.cancel = () => {
-			this.setState({
-				userProfile: JSON.parse(JSON.stringify(props.profile)), 
-				visible: false
-        	});
-			props.onCancel()
-		}
-		/* Save changes */
-		this.submit = () => {
-			let name = this.state.userProfile.name;
-			let location = this.state.userProfile.location;
-			this.setState({ loading: true }, () => {
-				profileProvider.updateUserProfile(name, location).then(() => {
-					this.setState({ loading: false }, () => {
-						Toast.show({
-              				text: 'Your profile has been updated.',
-							duration: 3000, 
-							position: 'bottom'
-            			});
-						props.onSubmit();
+    }
+	
+	updateProfile() {
+		let name = this.state.userProfile.name;
+		let location = this.state.userProfile.location;
+		this.setState({ loading: true }, () => {
+			profileProvider.updateUserProfile(name, location).then(() => {
+				this.setState({ loading: false }, () => {
+					Toast.show({
+						text: 'Your profile has been updated.',
+						duration: 3000, 
+						position: 'bottom'
 					});
-				}, error => {
-					this.setState({ loading: false }, () => {
-						setTimeout(() => {
-							Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });
-						}, 10);
-					});
+					this.props.onSubmit();
+				});
+			}, error => {
+				this.setState({ loading: false }, () => {
+					setTimeout(() => {
+						Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });
+					}, 10);
 				});
 			});
-		}
-    }
+		});
+	}
+	
+	cancel() {
+		this.setState({
+			userProfile: JSON.parse(JSON.stringify(this.props.profile)), 
+			visible: false, 
+			valid: true
+		});
+		this.props.onCancel();
+	}
+	
+	validateUserProfileForm() {
+		let name = this.state.userProfile.name;
+		this.setState({ 
+			valid: (name) ? true : false
+		});
+	}
 	
 	render() {
 		return (
@@ -84,9 +93,12 @@ export class EditProfile extends Component {
 									<Title>Edit Profile</Title>
 								</Body>
 								<Right>
-									<Button transparent onPress={() => this.submit()}>
+									{ !this.state.valid && <Button transparent disabled>
 										<Text bold>Save</Text>
-									</Button>
+									</Button> }
+									{ this.state.valid && <Button transparent onPress={() => this.updateProfile()}>
+										<Text bold>Save</Text>
+									</Button> }
 								</Right>
 							</Header>
 							<Content>
@@ -107,7 +119,8 @@ export class EditProfile extends Component {
 														profile.name = value;
 													this.setState({
 														userProfile: profile
-													})
+													});
+								 					this.validateUserProfileForm();
 												}} />
 										</Item>
 										<Item last>

@@ -40,7 +40,8 @@ export default class LoginWithEmail extends Component {
         super(props, context);
         this.state = {
             forgotPasswordOpen: false, 
-			loading: false
+			loading: false, 
+			valid: false
         }
 		this.loginWithEmailForm = {
 			email: null, 
@@ -49,11 +50,11 @@ export default class LoginWithEmail extends Component {
     }
 	
 	loginWithEmail(rootNav) {
-		let email = this.loginWithEmailForm.email;
-		let password = this.loginWithEmailForm.password;
-		if (email == null || password == null) {
+		if (!this.state.valid) {
 			return false;
 		}
+		let email = this.loginWithEmailForm.email;
+		let password = this.loginWithEmailForm.password;
 		this.setState({ loading: true }, () => {
 			authProvider.loginWithEmail(email, password).then(() => {
 				this.setState({ loading: false }, () => {
@@ -71,6 +72,14 @@ export default class LoginWithEmail extends Component {
 		});
 	}
 	
+	validateLoginWithEmailForm() {
+		let email = this.loginWithEmailForm.email;
+		let password = this.loginWithEmailForm.password;
+		this.setState({ 
+			valid: (email && password) ? true : false
+		});
+	}
+	
 	render() {
 		
 		const styles = this.props.style;
@@ -81,23 +90,32 @@ export default class LoginWithEmail extends Component {
 				<Container>
 					<Content padder>
 						<Form rounded>
-							<Item fixedLabel first>
+							<Item first>
 								<Label>Email</Label>
 								<Input 
 									keyboardType="email-address" 
 									autoCapitalize="none" 
-									onChangeText={(value) => this.loginWithEmailForm.email = value} 
+									onChangeText={(value) => {
+										this.loginWithEmailForm.email = value, 
+										this.validateLoginWithEmailForm()
+									}} 
 									autoCorrect={false} />
 							</Item>
-							<Item fixedLabel last>
+							<Item last>
 								<Label>Password</Label>
 								<Input 
-									onChangeText={(value) => this.loginWithEmailForm.password = value} 
+									onChangeText={(value) => {
+										this.loginWithEmailForm.password = value, 
+										this.validateLoginWithEmailForm()
+									}} 
 									secureTextEntry={true} />
 							</Item>
-							<Button block primary submit onPress={() => this.loginWithEmail(rootNav)}>
+							{ !this.state.valid && <Button block primary submit disabled>
 								<Text>Sign In</Text>
-							</Button>
+							</Button> }
+							{ this.state.valid && <Button block primary submit onPress={() => this.loginWithEmail(rootNav)}>
+								<Text>Sign In</Text>
+							</Button> }
 						</Form>
 					</Content>
 					<View style={{padding: 20}}>

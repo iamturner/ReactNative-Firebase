@@ -32,7 +32,8 @@ export class ForgotPassword extends Component {
 		this.state = {
 			visible: false, 
 			loading: false, 
-			showToast: false
+			showToast: false, 
+			valid: false
         }
 		this.recoverPasswordForm = { 
 			email: null
@@ -41,6 +42,9 @@ export class ForgotPassword extends Component {
     }
 	
 	recoverPassword() {
+		if (!this.state.valid) {
+			return false;
+		}
 		this.setState({ loading: true }, () => {
 			authProvider.recoverPassword(this.recoverPasswordForm.email).then(() => {
 				this.setState({ loading: false }, () => {
@@ -60,6 +64,13 @@ export class ForgotPassword extends Component {
 					}, 10);
 				});
 			});
+		});
+	}
+	
+	validateRecoverPasswordForm() {
+		let email = this.recoverPasswordForm.email;
+		this.setState({ 
+			valid: (email) ? true : false
 		});
 	}
 	
@@ -86,18 +97,24 @@ export class ForgotPassword extends Component {
 									<View listHeading noPadding style={{marginBottom: 16}}>
 										<Text>Please enter your email address and we will send you a link to reset your password.</Text>
 									</View>
-									<Item fixedLabel first last>
+									<Item first last>
 										<Label>Email</Label>
 										<Input 
 											keyboardType="email-address" 
 											autoCapitalize="none" 
-											onChangeText={(value) => this.recoverPasswordForm.email = value} 
+											onChangeText={(value) => {
+												this.recoverPasswordForm.email = value, 
+												this.validateRecoverPasswordForm()
+											}} 
 											autoCorrect={false} />
 									</Item>
 									<View style={{marginTop: 24}}>
-										<Button block primary onPress={() => this.recoverPassword()}>
+										{ !this.state.valid && <Button block primary disabled>
 											<Text>Submit</Text>
-										</Button>
+										</Button> }
+										{ this.state.valid && <Button block primary onPress={() => this.recoverPassword()}>
+											<Text>Submit</Text>
+										</Button> }
 									</View>
 								</Form>
 							</Content>
