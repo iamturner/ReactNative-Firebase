@@ -12,6 +12,7 @@
     "react-native": "0.45.1",
     "react-native-firebase": "^2.2.2",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-splash-screen": "^3.0.1",
     "react-navigation": "^1.0.0-beta.11"
   },
   "devDependencies": {

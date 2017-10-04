@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
 import { StatusBar } from "react-native";
 import { Root } from "native-base";
+import SplashScreen from 'react-native-splash-screen';
 
 import Login from "./screens/Login";
 import LoginWithEmail from "./screens/LoginWithEmail";
@@ -97,6 +98,10 @@ export default class App extends Component {
 				}
 			})
 		});
+
+		setTimeout(()=>{
+			SplashScreen.hide();
+		}, 20);
 		
 		return (
 			<Root>

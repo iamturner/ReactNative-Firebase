@@ -47,17 +47,17 @@ export default class Login extends Component {
 				<Container style={styles.container}>
 					<Content padder style={{paddingTop: 20}}>
 						<View style={styles.padding}>
-							<Button block disabled style={{backgroundColor: '#dd4b39'}}>
+							<Button block style={{backgroundColor: '#dd4b39'}}>
 								<Text>Sign in with Google</Text>
 							</Button>
 						</View>
 						<View style={styles.padding}>
-							<Button block disabled style={{backgroundColor: '#55acee'}}>
+							<Button block style={{backgroundColor: '#55acee'}}>
 								<Text>Sign in with Twitter</Text>
 							</Button>
 						</View>
 						<View style={styles.padding}>
-							<Button block disabled style={{backgroundColor: '#3b5999'}}>
+							<Button block style={{backgroundColor: '#3b5999'}}>
 								<Text>Sign in with Facebook</Text>
 							</Button>
 						</View>

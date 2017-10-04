@@ -34,7 +34,7 @@ export default class Profile extends Component {
 		}, 
 		headerRight: (
 			<Button transparent onPress={() => _this.toggleEditProfile()}>
-				<Text>Edit</Text>
+				<Text bold>Edit</Text>
 			</Button>
 		), 
 		headerBackTitle: 'Back'
@@ -44,7 +44,8 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
             editProfileOpen: false, 
-			userProfile: null
+			userProfile: null, 
+			test: null
         }
 	}
 
