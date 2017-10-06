@@ -8,6 +8,8 @@ import {
 	Button, 
 	Text, 
 	StyleProvider, 
+	Left, 
+	Body, 
 	Right, 
 	Separator, 
 	connectStyle
@@ -49,7 +51,7 @@ export default class Profile extends Component {
         }
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		_this = this;
 		profileProvider.getUserProfile().on('value', userProfileSnapshot => {
 			this.setState({
@@ -75,17 +77,17 @@ export default class Profile extends Component {
 								<Text>Personal Information</Text>
 							</View>
 							<List>
-								<ListItem button>
+								<ListItem>
 									<Text>Name</Text>
-									<Right>
+									<Body right>
 										<Text note>{ this.state.userProfile.name }</Text>
-									</Right>
+									</Body>
 								</ListItem>
 								<ListItem last noBorder>
 									<Text>Location</Text>
-									<Right>
+									<Body right>
 										<Text note>{ this.state.userProfile.location }</Text>
-									</Right>
+									</Body>
 								</ListItem>
 							</List>
 						</View>

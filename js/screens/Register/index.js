@@ -45,7 +45,13 @@ export default class Register extends Component {
 			email: null, 
 			password: null
 		}
+    	this.focusNextField = this.focusNextField.bind(this);
+    	this.inputs = {};
     }
+	
+	focusNextField(key) {
+		this.inputs[key]._root.focus();
+	}
 	
 	register(rootNav) {
 		if (!this.state.valid) {
@@ -96,7 +102,15 @@ export default class Register extends Component {
 										this.registerForm.name = value, 
 										this.validateRegisterForm()
 									}} 
-									autoCorrect={false} />
+									autoCorrect={false} 
+									blurOnSubmit={false} 
+									onSubmitEditing={() => {
+										this.focusNextField('email');
+									}} 
+									returnKeyType={"next"} 
+									ref={input => {
+										 this.inputs['name'] = input;
+									}} />
 							</Item>
 							<Item>
 								<Label>Email</Label>
@@ -107,7 +121,15 @@ export default class Register extends Component {
 										this.registerForm.email = value, 
 										this.validateRegisterForm()
 									}} 
-									autoCorrect={false} />
+									autoCorrect={false} 
+									blurOnSubmit={false} 
+									onSubmitEditing={() => {
+										this.focusNextField('password');
+									}} 
+									returnKeyType={"next"} 
+									ref={input => {
+										 this.inputs['email'] = input;
+									}} />
 							</Item>
 							<Item last>
 								<Label>Password</Label>
@@ -116,7 +138,11 @@ export default class Register extends Component {
 										this.registerForm.password = value, 
 										this.validateRegisterForm()
 									}} 
-									secureTextEntry={true} />
+									secureTextEntry={true} 
+									blurOnSubmit={true} 
+									ref={input => {
+										 this.inputs['password'] = input;
+									}} />
 							</Item>
 							<View style={{marginTop: 24}}>
 								{ !this.state.valid && <Button block primary disabled>

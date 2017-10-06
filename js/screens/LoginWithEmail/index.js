@@ -47,7 +47,13 @@ export default class LoginWithEmail extends Component {
 			email: null, 
 			password: null
 		}
+		this.focusNextField = this.focusNextField.bind(this);
+    	this.inputs = {};
     }
+	
+	focusNextField(key) {
+		this.inputs[key]._root.focus();
+	}
 	
 	loginWithEmail(rootNav) {
 		if (!this.state.valid) {
@@ -99,7 +105,15 @@ export default class LoginWithEmail extends Component {
 										this.loginWithEmailForm.email = value, 
 										this.validateLoginWithEmailForm()
 									}} 
-									autoCorrect={false} />
+									autoCorrect={false} 
+									blurOnSubmit={false} 
+									onSubmitEditing={() => {
+										this.focusNextField('password');
+									}} 
+									returnKeyType={"next"} 
+									ref={input => {
+										 this.inputs['email'] = input;
+									}} />
 							</Item>
 							<Item last>
 								<Label>Password</Label>
@@ -108,7 +122,11 @@ export default class LoginWithEmail extends Component {
 										this.loginWithEmailForm.password = value, 
 										this.validateLoginWithEmailForm()
 									}} 
-									secureTextEntry={true} />
+									secureTextEntry={true} 
+									blurOnSubmit={true} 
+									ref={input => {
+										 this.inputs['password'] = input;
+									}} />
 							</Item>
 							{ !this.state.valid && <Button block primary submit disabled>
 								<Text>Sign In</Text>

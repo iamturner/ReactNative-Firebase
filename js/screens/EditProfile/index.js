@@ -35,7 +35,13 @@ export class EditProfile extends Component {
 			valid: true, 
 			userProfile: JSON.parse(JSON.stringify(props.profile))
         }
+    	this.focusNextField = this.focusNextField.bind(this);
+    	this.inputs = {};
     }
+	
+	focusNextField(key) {
+		this.inputs[key]._root.focus();
+	}
 	
 	updateProfile() {
 		let name = this.state.userProfile.name;
@@ -121,7 +127,15 @@ export class EditProfile extends Component {
 														userProfile: profile
 													});
 								 					this.validateUserProfileForm();
-												}} />
+												}} 
+												blurOnSubmit={false} 
+												onSubmitEditing={() => {
+													this.focusNextField('location');
+												}} 
+												returnKeyType={"next"} 
+												ref={input => {
+													 this.inputs['name'] = input;
+												}} />										
 										</Item>
 										<Item last>
 											<Label>Location</Label>
@@ -133,6 +147,10 @@ export class EditProfile extends Component {
 													this.setState({
 														userProfile: profile
 													})
+												}} 
+												blurOnSubmit={true} 
+												ref={input => {
+													 this.inputs['location'] = input;
 												}} />
 										</Item>
 									</Form>
