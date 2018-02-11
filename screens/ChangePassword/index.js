@@ -15,6 +15,11 @@ export class ChangePassword extends Component {
 			current: null, 
 			new: null
 		}
+		this.inputs = {};
+	}
+	
+	focusNextField(key) {
+		this.inputs[key].focus();
 	}
 	
 	validateChangePasswordForm() {
@@ -68,7 +73,13 @@ export class ChangePassword extends Component {
 								onChangeText={(value) => {
 									this.changePasswordForm.current = value, 
 									this.validateChangePasswordForm()
-								}}>
+								}}
+								onSubmitEditing={() => {
+									this.focusNextField('new')
+								}}
+								inputRef={input => {
+                                    this.inputs['current'] = input;
+                                }}>
 								<Input.Before>
 									<Text style={{ marginRight: 24 }}>Current</Text>
 								</Input.Before>
@@ -80,7 +91,10 @@ export class ChangePassword extends Component {
 								onChangeText={(value) => {
 									this.changePasswordForm.new = value, 
 									this.validateChangePasswordForm()
-								}}>
+								}}
+								inputRef={input => {
+                                    this.inputs['new'] = input;
+                                }}>
 								<Input.Before>
 									<Text style={{ marginRight: 24 }}>New</Text>
 								</Input.Before>

@@ -35,29 +35,15 @@ export class Home extends Component {
 				cancelButtonIndex: 1,
 			}, (buttonIndex) => {
 				if (buttonIndex === 0) { 
-					this.actionLogOut();
+					authProvider.logoutUser();
 				}
 			});
 		} else {
 			Alert.alert('Sign Out', 'Are you sure you want to sign out?', [{
 				text: 'Cancel', onPress: () => {/* Cancelled */}, style: 'cancel'}, {
-				text: 'OK', onPress: () => this.actionLogOut()
+				text: 'OK', onPress: () => authProvider.logoutUser()
 			}], { cancelable: false });
 		}
-	}
-
-	actionLogOut() {
-		authProvider.logoutUser();
-		this.props.navigator.resetTo({
-			screen: 'screen.Login',
-			title: 'Login', 
-			animated: false, 
-			navigatorStyle: {
-				navBarTextColor: Colors.primary, 
-				navBarBackgroundColor: '#f8f8f8', 
-				navBarNoBorder: true
-			}
-		});
 	}
 
 	render() {

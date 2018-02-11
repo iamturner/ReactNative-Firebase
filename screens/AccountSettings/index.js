@@ -57,18 +57,7 @@ export class AccountSettings extends Component {
 	actionDeleteAccount(password) {
 		this.setState({ loading: true }, () => {
 			authProvider.deleteAccount(password).then(() => {
-				this.setState({ loading: false }, () => {
-					this.props.navigator.resetTo({
-						screen: 'screen.Login',
-						title: 'Login', 
-						animated: false, 
-						navigatorStyle: {
-							navBarTextColor: Colors.primary, 
-							navBarBackgroundColor: '#f8f8f8', 
-							navBarNoBorder: true
-						}
-					});
-				});
+				this.setState({ loading: false });
 			}, error => {
 				this.setState({ loading: false }, () => {
 					Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });

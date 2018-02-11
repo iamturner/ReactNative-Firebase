@@ -41,18 +41,7 @@ export class Register extends Component {
 		let password = this.registerForm.password;
 		this.setState({ loading: true }, () => {
 			authProvider.register(name, email, password).then(() => {
-				this.setState({ loading: false }, () => {
-					this.props.navigator.resetTo({
-						screen: 'screen.Home',
-						title: 'Home', 
-						animated: false, 
-						navigatorStyle: {
-							navBarTextColor: Colors.primary, 
-							navBarBackgroundColor: '#f8f8f8', 
-							navBarNoBorder: true
-						}
-					});
-				});
+				this.setState({ loading: false });
 			}, error => {
 				this.setState({ loading: false }, () => {
 					Alert.alert('Error', error.message, [{text: 'OK'}], { cancelable: false });

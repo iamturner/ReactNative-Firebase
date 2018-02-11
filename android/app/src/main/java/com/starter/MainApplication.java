@@ -35,7 +35,7 @@ public class MainApplication extends NavigationApplication {
 			// Add these packages as appropriate
 			new RNFirebaseAuthPackage(),
 			new RNFirebaseDatabasePackage(),
-			new RNFirebaseStoragePackage(), 
+			new RNFirebaseStoragePackage()
 		);
 	}
 	
