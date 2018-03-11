@@ -9,6 +9,7 @@ import { ChangeEmail } from './ChangeEmail';
 import { ChangePassword } from './ChangePassword';
 import { EditProfile } from './EditProfile';
 import { ForgotPassword } from './ForgotPassword';
+import { CameraRollPage } from './CameraRoll'
 
 export function registerScreens() {
 	
@@ -22,5 +23,6 @@ export function registerScreens() {
 	Navigation.registerComponent('screen.ChangePassword', () => ChangePassword);
 	Navigation.registerComponent('screen.EditProfile', () => EditProfile);
 	Navigation.registerComponent('screen.ForgotPassword', () => ForgotPassword);
+	Navigation.registerComponent('screen.CameraRoll', () => CameraRollPage);
 	
 }

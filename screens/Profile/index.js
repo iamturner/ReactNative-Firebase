@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { View, List, Text, Colors, Container } from './../../theme';
 import profileProvider from './../../providers/profile';
 
@@ -62,6 +62,13 @@ export class Profile extends Component {
 			
 				{ this.state.userProfile && <View>
 			
+					{ this.state.userProfile.photo && <View padding style={styles.photoContainer}>
+						<View style={styles.photoBackground}></View>
+						<View style={styles.photo}>
+							<Image style={styles.photoImage} source={{uri: this.state.userProfile.photo}} />
+						</View>
+					</View> }
+			
 					<View style={{ marginTop: 20, paddingHorizontal: 16 }}>
 						<Text style={{ fontSize: 14, color: Colors.text }}>Personal Information</Text>
 					</View>
@@ -90,3 +97,29 @@ export class Profile extends Component {
 	}
 	
 }
+
+const styles = StyleSheet.create({
+	photoContainer: {
+		paddingBottom: 0
+	}, 
+	photoBackground: {
+		backgroundColor: 'rgba(81, 101, 120, 0.15)', 
+		position: 'absolute', 
+		top: 0, 
+		left: 0, 
+		right: 0, 
+		bottom: 16
+	}, 
+	photo: {
+		backgroundColor: '#516578', 
+		height: 80, 
+		width: 80, 
+		borderRadius: 40, 
+		marginTop: 16
+	}, 
+	photoImage: {
+		height: 80, 
+		width: 80, 
+		borderRadius: 40
+	}
+});
