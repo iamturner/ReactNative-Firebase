@@ -44,7 +44,7 @@ $ cd ios/
 
 $ pod install
 ```
-**_Note:_** *To run app from Xcode after installing pods, use the .xcworkspace file.*
+**_Note:_** *To run app from XCode after installing pods, use the .xcworkspace file.*
 
 Download the GoogleService-Info.plist file from your Firebase console and add to XCode project.
 
