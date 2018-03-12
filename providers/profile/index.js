@@ -8,8 +8,8 @@ module.exports = {
 	}, 
 	
 	updateUserProfile: async (name, location = null, photo = null) => {
-		/* Check for new photo (`assets-library://` is for iOS, `content://` for Android) */
-		if (photo != null && (photo.startsWith('assets-library://') || photo.startsWith('content://'))) {
+		/* Check for new photo */
+		if (photo != null && !photo.startsWith('http')) {
 			/* If there's a new photo, upload it first */
 			const upload = () => {
 				return new Promise((resolve, reject) => {

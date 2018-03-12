@@ -64,8 +64,14 @@ export class CameraRollPage extends Component {
 			
 					<View style={styles.photosContainer}>
 			
-						<TouchableOpacity style={[styles.photo, styles.photoDelete]} onPress={() => this.selectPhoto(null)}>
-							<Icon name="md-trash" size={40} style={{color: Colors.danger}} />
+						<TouchableOpacity style={styles.photo} onPress={() => this.selectPhoto(null)}>
+							<Icon 
+								name="ios-trash" 
+								size={40} 
+								style={[
+									styles.photoIcon, 
+									{color: Colors.danger}
+								]} />
 						</TouchableOpacity>
 			
 						{ this.state.photos.map((p, i) => { return (
@@ -89,21 +95,19 @@ export class CameraRollPage extends Component {
 const styles = StyleSheet.create({
 	photosContainer: {
 		flexWrap: 'wrap', 
-		flexDirection: 'row', 
-		paddingHorizontal: 0.5
+		flexDirection: 'row'
 	}, 
 	photo: {
-		width: (Dimensions.get('window').width-1)/3, 
-		height: (Dimensions.get('window').width-1)/3, 
-		padding: 0.5
+		width: (Dimensions.get('window').width)/3, 
+		height: (Dimensions.get('window').width)/3, 
+		justifyContent: 'center'
 	}, 
 	photoImage: {
 		flex: 1, 
 		width: null, 
         height: null
 	}, 
-	photoDelete: {
-		alignItems: 'center', 
-		justifyContent: 'center'
+	photoIcon: {
+		alignSelf: 'center'
 	}
 });
