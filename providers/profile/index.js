@@ -31,7 +31,7 @@ module.exports = {
 					});	
 				});
 			}
-			await upload().then((response)=> {
+			await upload().then((response) => {
 				photo = response.downloadUrl;
 			});
 		}
