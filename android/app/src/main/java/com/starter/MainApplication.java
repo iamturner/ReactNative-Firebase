@@ -15,7 +15,7 @@ import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 
 // RNNavigation
 import com.reactnativenavigation.NavigationApplication;
-// remove `import com.reactnativenavigation.NavigationReactPackage;`.
+// *** REMOVE `import com.reactnativenavigation.NavigationReactPackage;`. ***
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MainApplication extends NavigationApplication {
 		return BuildConfig.DEBUG;
 	}
 	
-	// remove `new NavigationReactPackage()`.
+	// *** REMOVE `new NavigationReactPackage()`. ***
 	protected List<ReactPackage> getPackages() {
 		return Arrays.<ReactPackage>asList(
 			new MainReactPackage(),

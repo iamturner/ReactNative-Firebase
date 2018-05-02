@@ -14,6 +14,7 @@ pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
 pod 'React', :path => '../node_modules/react-native', :subspecs => [
   'BatchedBridge', # Required For React Native 0.45.0+
   'Core',
+  'RCTImage'
   # Add any other subspecs you want to use in your project
 ]
 

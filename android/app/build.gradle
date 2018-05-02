@@ -137,7 +137,7 @@ android {
 }
 
 dependencies {
-	// Replace `:react-native-firebase` with line below. 
+	// *** REPLACE `:react-native-firebase` with line below. *** 
 	// compile(project(':react-native-firebase')) { transitive = false }
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

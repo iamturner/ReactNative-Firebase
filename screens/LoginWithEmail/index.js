@@ -62,10 +62,10 @@ export class LoginWithEmail extends Component {
 		
 		return (
 			
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+			
 			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			
-			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-						
 				<Container padding>
 
 					{/* Inputs */}
@@ -100,13 +100,20 @@ export class LoginWithEmail extends Component {
 								borderTopLeftRadius: 0, 
 								borderTopRightRadius: 0 }}
 								secureTextEntry={true}
+								returnKeyType={"go"}
+								enablesReturnKeyAutomatically={true}
 								onChangeText={(value) => {
 									this.loginWithEmailForm.password = value, 
 									this.validateLoginWithEmailForm()
 								}}
 								inputRef={input => {
                                     this.inputs['password'] = input;
-                                }}>
+                                }}
+								onSubmitEditing={() => {
+									if (this.state.valid) {
+										this.loginWithEmail();
+									}
+								}}>
 								<Input.Before>
 									<Text style={{ marginRight: 24 }}>Password</Text>
 								</Input.Before>
@@ -129,9 +136,9 @@ export class LoginWithEmail extends Component {
 			
 				</Container>
 			
-			</KeyboardAvoidingView>
-					
 			</TouchableWithoutFeedback>
+
+			</KeyboardAvoidingView>
 			
 		);
 		
