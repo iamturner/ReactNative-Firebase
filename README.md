@@ -6,7 +6,6 @@ A simple starter project for React Native apps, (iOS and Android), powered by Fi
 * CRUD - user profile
 * Photo upload to Firebase Storage - user's profile picture
 
-
 ## Author
 
 Ian Turner ( [@i_am_turner](http://twitter.com/i_am_turner) / [iamturner.co.uk](http://iamturner.co.uk) )
