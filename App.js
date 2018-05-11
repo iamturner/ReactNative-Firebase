@@ -26,4 +26,6 @@ firebase.auth().onAuthStateChanged((user) => {
 
 registerScreens();
 
+firebase.analytics().setAnalyticsCollectionEnabled(true);
+
 console.disableYellowBox = true;

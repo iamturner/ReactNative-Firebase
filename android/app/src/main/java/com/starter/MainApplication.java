@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 
 // RNNavigation
 import com.reactnativenavigation.NavigationApplication;
@@ -35,7 +36,8 @@ public class MainApplication extends NavigationApplication {
 			// Add these packages as appropriate
 			new RNFirebaseAuthPackage(),
 			new RNFirebaseDatabasePackage(),
-			new RNFirebaseStoragePackage()
+			new RNFirebaseStoragePackage(),
+			new RNFirebaseAnalyticsPackage()
 		);
 	}
 	

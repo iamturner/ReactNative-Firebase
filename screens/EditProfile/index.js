@@ -195,7 +195,7 @@ export class EditProfile extends Component {
 					</View>
 
 					<View style={{ marginTop: 20, paddingHorizontal: 16 }}>
-						<Text style={{ fontSize: 14, color: Colors.text }}>Personal Information</Text>
+						<Text style={{ fontSize: 14 }}>Personal Information</Text>
 					</View>
 
 					<List style={{ marginTop: 10 }}>
@@ -208,6 +208,7 @@ export class EditProfile extends Component {
 									borderRadius: 0, 
 									backgroundColor: 'transparent' }}
 									value={this.state.userProfile.name}
+									returnKeyType={"next"}
 									onChangeText={(value) => {
 										let profile = this.state.userProfile;
 											profile.name = value;

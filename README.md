@@ -5,6 +5,7 @@ A simple starter project for React Native apps, (iOS and Android), powered by Fi
 * Authentication - user registration and login.
 * CRUD - user profile
 * Photo upload to Firebase Storage - user's profile picture
+* Firebase Analytics
 
 ## Author
 
