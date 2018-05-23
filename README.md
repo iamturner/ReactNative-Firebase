@@ -49,7 +49,7 @@ $ pod install
 ```
 **_Note:_** *To run app from XCode after installing pods, use the .xcworkspace file.*
 
-Download the GoogleService-Info.plist file from your Firebase console and add to XCode project.
+Download the GoogleService-Info.plist file from your Firebase console and add to ios/[YOUR_APP], then make sure file is added to your XCode project.
 
 ```sh
 $ cd ../
@@ -76,7 +76,7 @@ To allow camera roll access, you must link the RCTCameraRoll library to your pro
 A few files in the android folder require some editing after installing and linking dependencies. These are:
 
 * android/app/build.gradle
-* android/app/src/main/java/com/starter/MainApplication.java
+* android/app/src/main/java/com/[YOUR_APP]/MainApplication.java
 
 Download the google-services.json file from your Firebase console and add to android/app folder, (make sure 'package_name' and 'bundle_id' properties are the same as applicationId - currently 'com.starter').
 

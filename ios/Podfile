@@ -1,20 +1,23 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
 
 # Required by RNFirebase
 pod 'Firebase/Core'
-pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 
 # [OPTIONAL PODS] - comment out pods for firebase products you won't be using.
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
 
 pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
 pod 'React', :path => '../node_modules/react-native', :subspecs => [
-  'BatchedBridge', # Required For React Native 0.45.0+
   'Core',
-  'RCTImage'
+  'CxxBridge',
+  'DevSupport',
+  'RCTText', 
+  'RCTImage',
+  'RCTNetwork'
   # Add any other subspecs you want to use in your project
 ]
 

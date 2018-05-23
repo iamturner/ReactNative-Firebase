@@ -1,6 +1,8 @@
 package com.starter;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -13,6 +15,7 @@ import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 
 // RNNavigation
 import com.reactnativenavigation.NavigationApplication;
@@ -37,7 +40,8 @@ public class MainApplication extends NavigationApplication {
 			new RNFirebaseAuthPackage(),
 			new RNFirebaseDatabasePackage(),
 			new RNFirebaseStoragePackage(),
-			new RNFirebaseAnalyticsPackage()
+			new RNFirebaseAnalyticsPackage(),
+			new RNFirebaseFirestorePackage()
 		);
 	}
 	
@@ -49,6 +53,12 @@ public class MainApplication extends NavigationApplication {
 	@Override
 	public String getJSMainModuleName() {
 		return "index";
+	}
+	
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		MultiDex.install(this);
 	}
 	
 }

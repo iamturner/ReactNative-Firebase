@@ -32,7 +32,7 @@ module.exports = {
 				});
 			}
 			await upload().then((response) => {
-				photo = response.downloadUrl;
+				photo = response.downloadURL;
 			});
 		}
 		let user = firebase.auth().currentUser;
@@ -40,21 +40,6 @@ module.exports = {
 			name: name, 
 			location: location, 
 			photo: photo
-		});
-	}, 
-	
-	saveUserPhoto(image: string = null) {
-		let storageRef = firebase.storage().ref();
-		let filename = Math.floor(Date.now() / 1000);
-		let imageRef = storageRef.child(`profile_images/${filename}.jpg`);
-		
-		let metadata = {
-			cacheControl: 'public,max-age=3600', // Cache image for 1 hour 
-			contentType: 'image/jpeg'
-		};
-		
-		return imageRef.putString(image, metadata).then((snapshot)=> {
-			return snapshot;
 		});
 	}
 	
