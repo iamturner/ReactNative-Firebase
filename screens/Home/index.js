@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, ActionSheetIOS, Alert } from 'react-native';
 import { View, Button, List, Text, Colors, Container } from './../../theme';
-import authProvider from './../../providers/auth';
+import authActions from './../../actions/auth';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export class Home extends Component {
@@ -35,13 +35,13 @@ export class Home extends Component {
 				cancelButtonIndex: 1,
 			}, (buttonIndex) => {
 				if (buttonIndex === 0) { 
-					authProvider.logoutUser();
+					authActions.logoutUser();
 				}
 			});
 		} else {
 			Alert.alert('Sign Out', 'Are you sure you want to sign out?', [{
 				text: 'Cancel', onPress: () => {/* Cancelled */}, style: 'cancel'}, {
-				text: 'OK', onPress: () => authProvider.logoutUser()
+				text: 'OK', onPress: () => authActions.logoutUser()
 			}], { cancelable: false });
 		}
 	}

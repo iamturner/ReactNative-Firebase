@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { View, List, Text, Colors, Container } from './../../theme';
-import profileProvider from './../../providers/profile';
+import profileActions from './../../actions/profile';
 
 export class Profile extends Component {
 
@@ -22,7 +22,7 @@ export class Profile extends Component {
 	}
 
 	componentWillMount() {
-		profileProvider.getUserProfile().on('value', userProfileSnapshot => {
+		profileActions.getUserProfile().on('value', userProfileSnapshot => {
 			this.setState({
 				userProfile: userProfileSnapshot.val()
         	});

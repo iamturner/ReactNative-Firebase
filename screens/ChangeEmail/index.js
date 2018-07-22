@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert, AlertIOS } from 'react-native';
 import { View, Button, Input, Text, Container, Loading } from './../../theme';
-import authProvider from "./../../providers/auth";
+import authActions from "./../../actions/auth";
 import prompt from 'react-native-prompt-android';
 
 export class ChangeEmail extends Component {
@@ -53,7 +53,7 @@ export class ChangeEmail extends Component {
 	
 	actionChangeEmail(newEmail, password) {
 		Loading.show().then(() => {
-			authProvider.updateEmail(newEmail, password).then(() => {
+			authActions.updateEmail(newEmail, password).then(() => {
 				Loading.dismiss().then(() => {
 					this.props.navigator.pop();
 					/* Toast notification */

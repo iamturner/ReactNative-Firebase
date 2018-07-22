@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Alert, Image, ActionSheetIOS, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { View, Button, List, Input, Text, Container, Colors, Loading } from './../../theme';
-import profileProvider from './../../providers/profile';
+import profileActions from './../../actions/profile';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export class EditProfile extends Component {
@@ -31,7 +31,7 @@ export class EditProfile extends Component {
 	}
 
 	componentWillMount() {
-		profileProvider.getUserProfile().on('value', userProfileSnapshot => {
+		profileActions.getUserProfile().on('value', userProfileSnapshot => {
 			this.setState({
 				userProfile: JSON.parse(JSON.stringify(userProfileSnapshot.val()))
         	}, () => {
@@ -151,7 +151,7 @@ export class EditProfile extends Component {
 		let location = this.state.userProfile.location;
 		let photo = this.state.userProfile.photo;
 		Loading.show({ text: 'Saving...' }).then(() => {
-			profileProvider.updateUserProfile(name, location, photo).then(() => {
+			profileActions.updateUserProfile(name, location, photo).then(() => {
 				Loading.dismiss().then(() => {
 					this.props.navigator.dismissModal();
 					/* Toast notification */
